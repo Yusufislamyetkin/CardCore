@@ -1,0 +1,30 @@
+﻿var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseUrls("http://localhost:5000");
+
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+var app = builder.Build();
+
+app.Use(async (ctx, next) =>
+{
+    ctx.Response.Headers["X-Gateway"] = "MiniBank.ApiGateway";
+    await next();
+});
+
+app.MapReverseProxy();
+app.MapGet("/health", () => Results.Ok(new
+{
+    status = "healthy",
+    service = "MiniBank.ApiGateway",
+    timestamp = DateTime.UtcNow,
+    upstreamServices = new[]
+    {
+        "iam:5001", "account:5002", "card:5003", "authorization:5004",
+        "transaction:5005", "installment:5006", "fraud:5007",
+        "eod:5008", "reconciliation:5009", "notification:5010"
+    }
+}));
+
+app.Run();
