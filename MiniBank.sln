@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.EodService.UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.ReconciliationService.UnitTests", "tests\Unit\MiniBank.ReconciliationService.UnitTests\MiniBank.ReconciliationService.UnitTests.csproj", "{8F350C2C-34D7-4E37-8066-F4F553354D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.NotificationService.UnitTests", "tests\Unit\MiniBank.NotificationService.UnitTests\MiniBank.NotificationService.UnitTests.csproj", "{D9724FB5-F187-498D-8D37-F834EB7C9FA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -379,6 +381,18 @@ Global
 		{8F350C2C-34D7-4E37-8066-F4F553354D7E}.Release|x64.Build.0 = Release|Any CPU
 		{8F350C2C-34D7-4E37-8066-F4F553354D7E}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F350C2C-34D7-4E37-8066-F4F553354D7E}.Release|x86.Build.0 = Release|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Debug|x64.Build.0 = Debug|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Debug|x86.Build.0 = Debug|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Release|x64.ActiveCfg = Release|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Release|x64.Build.0 = Release|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Release|x86.ActiveCfg = Release|Any CPU
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -414,5 +428,6 @@ Global
 		{03BF9136-3F81-439D-B568-D1392D1C1551} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 		{3C92835A-5773-458D-8F3D-A5FFA52CD5FB} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 		{8F350C2C-34D7-4E37-8066-F4F553354D7E} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
+		{D9724FB5-F187-498D-8D37-F834EB7C9FA2} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 	EndGlobalSection
 EndGlobal

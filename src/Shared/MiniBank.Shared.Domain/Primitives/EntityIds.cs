@@ -83,3 +83,9 @@ public sealed record ReconciliationItemId(Guid Value) : StronglyTypedId(Value)
     public static ReconciliationItemId New() => new(Guid.NewGuid());
     public static ReconciliationItemId From(Guid id) => new(id);
 }
+
+public sealed record NotificationId(Guid Value) : StronglyTypedId(Value)
+{
+    public static NotificationId New() => new(Guid.NewGuid());
+    public static NotificationId From(Guid id) => new(id);
+}
