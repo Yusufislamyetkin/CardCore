@@ -59,3 +59,15 @@ public sealed record FraudFlagId(Guid Value) : StronglyTypedId(Value)
     public static FraudFlagId New() => new(Guid.NewGuid());
     public static FraudFlagId From(Guid id) => new(id);
 }
+
+public sealed record EodRunId(Guid Value) : StronglyTypedId(Value)
+{
+    public static EodRunId New() => new(Guid.NewGuid());
+    public static EodRunId From(Guid id) => new(id);
+}
+
+public sealed record StatementId(Guid Value) : StronglyTypedId(Value)
+{
+    public static StatementId New() => new(Guid.NewGuid());
+    public static StatementId From(Guid id) => new(id);
+}
