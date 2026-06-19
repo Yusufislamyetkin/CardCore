@@ -71,3 +71,15 @@ public sealed record StatementId(Guid Value) : StronglyTypedId(Value)
     public static StatementId New() => new(Guid.NewGuid());
     public static StatementId From(Guid id) => new(id);
 }
+
+public sealed record ReconciliationBatchId(Guid Value) : StronglyTypedId(Value)
+{
+    public static ReconciliationBatchId New() => new(Guid.NewGuid());
+    public static ReconciliationBatchId From(Guid id) => new(id);
+}
+
+public sealed record ReconciliationItemId(Guid Value) : StronglyTypedId(Value)
+{
+    public static ReconciliationItemId New() => new(Guid.NewGuid());
+    public static ReconciliationItemId From(Guid id) => new(id);
+}
