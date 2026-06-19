@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.AccountService.Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.CardService.UnitTests", "tests\Unit\MiniBank.CardService.UnitTests\MiniBank.CardService.UnitTests.csproj", "{93ED43A3-6B1D-4EF0-A420-1FF0FB448579}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.AuthorizationService.UnitTests", "tests\Unit\MiniBank.AuthorizationService.UnitTests\MiniBank.AuthorizationService.UnitTests.csproj", "{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -293,6 +295,18 @@ Global
 		{93ED43A3-6B1D-4EF0-A420-1FF0FB448579}.Release|x64.Build.0 = Release|Any CPU
 		{93ED43A3-6B1D-4EF0-A420-1FF0FB448579}.Release|x86.ActiveCfg = Release|Any CPU
 		{93ED43A3-6B1D-4EF0-A420-1FF0FB448579}.Release|x86.Build.0 = Release|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Debug|x64.Build.0 = Debug|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Debug|x86.Build.0 = Debug|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Release|x64.ActiveCfg = Release|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Release|x64.Build.0 = Release|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Release|x86.ActiveCfg = Release|Any CPU
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -322,5 +336,6 @@ Global
 		{B451CD0A-36FA-414B-90F0-C6A017F1E415} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 		{BF8F82D0-A2C5-4048-9DDD-349C621D708A} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 		{93ED43A3-6B1D-4EF0-A420-1FF0FB448579} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
+		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 	EndGlobalSection
 EndGlobal
