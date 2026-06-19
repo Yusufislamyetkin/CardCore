@@ -61,6 +61,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.TransactionService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.InstallmentService.UnitTests", "tests\Unit\MiniBank.InstallmentService.UnitTests\MiniBank.InstallmentService.UnitTests.csproj", "{0F1299E0-D211-435C-A45E-39D9F98FD0D5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5854FF58-B8C5-05C6-5BF2-ACE42193F22B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniBank.FraudService.UnitTests", "tests\Unit\MiniBank.FraudService.UnitTests\MiniBank.FraudService.UnitTests.csproj", "{03BF9136-3F81-439D-B568-D1392D1C1551}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -335,6 +339,18 @@ Global
 		{0F1299E0-D211-435C-A45E-39D9F98FD0D5}.Release|x64.Build.0 = Release|Any CPU
 		{0F1299E0-D211-435C-A45E-39D9F98FD0D5}.Release|x86.ActiveCfg = Release|Any CPU
 		{0F1299E0-D211-435C-A45E-39D9F98FD0D5}.Release|x86.Build.0 = Release|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Debug|x64.Build.0 = Debug|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Debug|x86.Build.0 = Debug|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Release|x64.ActiveCfg = Release|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Release|x64.Build.0 = Release|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Release|x86.ActiveCfg = Release|Any CPU
+		{03BF9136-3F81-439D-B568-D1392D1C1551}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -367,5 +383,6 @@ Global
 		{F0A8269D-4EF8-4774-BC4F-0D5AB54B4875} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 		{BC048506-2386-4D7A-9CE2-9C368F337F79} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 		{0F1299E0-D211-435C-A45E-39D9F98FD0D5} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
+		{03BF9136-3F81-439D-B568-D1392D1C1551} = {9D556B49-86D1-93A7-9596-FFAAB74EC556}
 	EndGlobalSection
 EndGlobal

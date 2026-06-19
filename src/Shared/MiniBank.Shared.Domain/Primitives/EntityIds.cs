@@ -47,3 +47,15 @@ public sealed record LedgerEntryId(Guid Value) : StronglyTypedId(Value)
     public static LedgerEntryId New() => new(Guid.NewGuid());
     public static LedgerEntryId From(Guid id) => new(id);
 }
+
+public sealed record FraudCaseId(Guid Value) : StronglyTypedId(Value)
+{
+    public static FraudCaseId New() => new(Guid.NewGuid());
+    public static FraudCaseId From(Guid id) => new(id);
+}
+
+public sealed record FraudFlagId(Guid Value) : StronglyTypedId(Value)
+{
+    public static FraudFlagId New() => new(Guid.NewGuid());
+    public static FraudFlagId From(Guid id) => new(id);
+}
