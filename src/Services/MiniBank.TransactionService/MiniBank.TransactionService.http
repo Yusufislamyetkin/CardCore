@@ -1,0 +1,6 @@
+@MiniBank.TransactionService_HostAddress = http://localhost:5196
+
+GET {{MiniBank.TransactionService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

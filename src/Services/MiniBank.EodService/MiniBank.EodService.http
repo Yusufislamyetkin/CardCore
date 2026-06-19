@@ -1,0 +1,6 @@
+@MiniBank.EodService_HostAddress = http://localhost:5031
+
+GET {{MiniBank.EodService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

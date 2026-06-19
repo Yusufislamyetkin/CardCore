@@ -1,0 +1,9 @@
+CREATE DATABASE iam_db;
+CREATE DATABASE account_db;
+CREATE DATABASE card_db;
+CREATE DATABASE authorization_db;
+CREATE DATABASE transaction_db;
+CREATE DATABASE installment_db;
+CREATE DATABASE fraud_db;
+CREATE DATABASE eod_db;
+CREATE DATABASE reconcile_db;

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Testcontainers" />
+    <PackageReference Include="Testcontainers.PostgreSql" />
+    <PackageReference Include="Testcontainers.Kafka" />
+    <PackageReference Include="Testcontainers.Redis" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Shared\MiniBank.Shared.Domain\MiniBank.Shared.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\Shared\MiniBank.Shared.Contracts\MiniBank.Shared.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\src\Shared\MiniBank.Shared.Infrastructure\MiniBank.Shared.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

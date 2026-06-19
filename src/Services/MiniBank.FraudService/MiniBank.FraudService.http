@@ -1,0 +1,6 @@
+@MiniBank.FraudService_HostAddress = http://localhost:5246
+
+GET {{MiniBank.FraudService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

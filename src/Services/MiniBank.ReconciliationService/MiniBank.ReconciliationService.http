@@ -1,0 +1,6 @@
+@MiniBank.ReconciliationService_HostAddress = http://localhost:5030
+
+GET {{MiniBank.ReconciliationService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
