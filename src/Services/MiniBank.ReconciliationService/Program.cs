@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniBank.ReconciliationService.Infrastructure.Persistence;
 using MiniBank.Shared.Infrastructure.Api;
+using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "MiniBank Reconciliation Service", Version = "v1" }));
+
+builder.Services.AddMiniBankObservability("MiniBank.ReconciliationService", builder.Configuration);
 
 var app = builder.Build();
 

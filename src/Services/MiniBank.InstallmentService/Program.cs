@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniBank.InstallmentService.Infrastructure.Persistence;
 using MiniBank.Shared.Infrastructure.Api;
+using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "MiniBank Installment Service", Version = "v1" }));
+
+builder.Services.AddMiniBankObservability("MiniBank.InstallmentService", builder.Configuration);
 
 var app = builder.Build();
 

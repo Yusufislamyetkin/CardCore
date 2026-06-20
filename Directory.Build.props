@@ -6,5 +6,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningLevel>7</WarningLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <NuGetAuditLevel>high</NuGetAuditLevel>
   </PropertyGroup>
 </Project>

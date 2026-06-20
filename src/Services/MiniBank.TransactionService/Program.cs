@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniBank.Shared.Infrastructure.Api;
+using MiniBank.Shared.Infrastructure.Observability;
 using MiniBank.TransactionService.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +52,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.Services.AddMiniBankObservability("MiniBank.TransactionService", builder.Configuration);
 
 var app = builder.Build();
 

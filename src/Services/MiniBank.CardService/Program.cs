@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniBank.CardService.Infrastructure.Persistence;
 using MiniBank.Shared.Infrastructure.Api;
+using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.Services.AddMiniBankObservability("MiniBank.CardService", builder.Configuration);
 
 var app = builder.Build();
 

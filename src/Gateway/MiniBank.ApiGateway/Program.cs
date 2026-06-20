@@ -1,9 +1,13 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using MiniBank.Shared.Infrastructure.Observability;
+
+var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://localhost:5000");
 
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+builder.Services.AddMiniBankObservability("MiniBank.ApiGateway", builder.Configuration);
 
 var app = builder.Build();
 

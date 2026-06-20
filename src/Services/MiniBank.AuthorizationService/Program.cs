@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using MiniBank.AuthorizationService.Application;
 using MiniBank.AuthorizationService.Infrastructure.Persistence;
 using MiniBank.Shared.Infrastructure.Api;
+using MiniBank.Shared.Infrastructure.Observability;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +61,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.Services.AddMiniBankObservability("MiniBank.AuthorizationService", builder.Configuration);
 
 var app = builder.Build();
 

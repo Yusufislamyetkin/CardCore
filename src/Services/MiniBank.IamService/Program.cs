@@ -6,6 +6,7 @@ using MiniBank.IamService.Application;
 using MiniBank.IamService.Infrastructure;
 using MiniBank.IamService.Infrastructure.Persistence;
 using MiniBank.Shared.Infrastructure.Api;
+using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +61,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddMiniBankObservability("MiniBank.IamService", builder.Configuration);
 
 var app = builder.Build();
 
