@@ -1,4 +1,5 @@
 services:
+  # ─── Infrastructure ────────────────────────────────────────────────────────
   postgres:
     image: postgres:16-alpine
     container_name: minibank-postgres
@@ -61,6 +62,216 @@ services:
       - "16686:16686"
       - "4317:4317"
       - "4318:4318"
+
+  # ─── Application Services ──────────────────────────────────────────────────
+  iam-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.IamService/Dockerfile
+    container_name: minibank-iam
+    ports:
+      - "5001:5001"
+    environment:
+      ConnectionStrings__IamDb: "Host=postgres;Port=5432;Database=iam_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5001/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  account-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.AccountService/Dockerfile
+    container_name: minibank-account
+    ports:
+      - "5002:5002"
+    environment:
+      ConnectionStrings__AccountDb: "Host=postgres;Port=5432;Database=account_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  card-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.CardService/Dockerfile
+    container_name: minibank-card
+    ports:
+      - "5003:5003"
+    environment:
+      ConnectionStrings__CardDb: "Host=postgres;Port=5432;Database=card_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  authorization-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.AuthorizationService/Dockerfile
+    container_name: minibank-authorization
+    ports:
+      - "5004:5004"
+    environment:
+      ConnectionStrings__AuthorizationDb: "Host=postgres;Port=5432;Database=authorization_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      ConnectionStrings__Redis: "redis:6379,password=${REDIS_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  transaction-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.TransactionService/Dockerfile
+    container_name: minibank-transaction
+    ports:
+      - "5005:5005"
+    environment:
+      ConnectionStrings__TransactionDb: "Host=postgres;Port=5432;Database=transaction_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  installment-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.InstallmentService/Dockerfile
+    container_name: minibank-installment
+    ports:
+      - "5006:5006"
+    environment:
+      ConnectionStrings__InstallmentDb: "Host=postgres;Port=5432;Database=installment_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  fraud-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.FraudService/Dockerfile
+    container_name: minibank-fraud
+    ports:
+      - "5007:5007"
+    environment:
+      ConnectionStrings__FraudDb: "Host=postgres;Port=5432;Database=fraud_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  eod-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.EodService/Dockerfile
+    container_name: minibank-eod
+    ports:
+      - "5008:5008"
+    environment:
+      ConnectionStrings__EodDb: "Host=postgres;Port=5432;Database=eod_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  reconciliation-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.ReconciliationService/Dockerfile
+    container_name: minibank-reconciliation
+    ports:
+      - "5009:5009"
+    environment:
+      ConnectionStrings__ReconciliationDb: "Host=postgres;Port=5432;Database=reconcile_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  notification-service:
+    build:
+      context: ..
+      dockerfile: src/Services/MiniBank.NotificationService/Dockerfile
+    container_name: minibank-notification
+    ports:
+      - "5010:5010"
+    environment:
+      ConnectionStrings__NotificationDb: "Host=postgres;Port=5432;Database=notification_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      Jwt__Secret: ${JWT_SECRET}
+      Jwt__Issuer: MiniBank.IAM
+      Jwt__Audience: MiniBank
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api-gateway:
+    build:
+      context: ..
+      dockerfile: src/Gateway/MiniBank.ApiGateway/Dockerfile
+    container_name: minibank-gateway
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ReverseProxy__Clusters__iam-cluster__Destinations__iam-destination__Address: http://iam-service:5001/
+      ReverseProxy__Clusters__account-cluster__Destinations__account-destination__Address: http://account-service:5002/
+      ReverseProxy__Clusters__card-cluster__Destinations__card-destination__Address: http://card-service:5003/
+      ReverseProxy__Clusters__authorization-cluster__Destinations__authorization-destination__Address: http://authorization-service:5004/
+      ReverseProxy__Clusters__transaction-cluster__Destinations__transaction-destination__Address: http://transaction-service:5005/
+      ReverseProxy__Clusters__installment-cluster__Destinations__installment-destination__Address: http://installment-service:5006/
+      ReverseProxy__Clusters__fraud-cluster__Destinations__fraud-destination__Address: http://fraud-service:5007/
+      ReverseProxy__Clusters__eod-cluster__Destinations__eod-destination__Address: http://eod-service:5008/
+      ReverseProxy__Clusters__reconciliation-cluster__Destinations__reconciliation-destination__Address: http://reconciliation-service:5009/
+      ReverseProxy__Clusters__notification-cluster__Destinations__notification-destination__Address: http://notification-service:5010/
+    depends_on:
+      - iam-service
+      - account-service
+      - card-service
+      - authorization-service
+      - transaction-service
+      - installment-service
+      - fraud-service
+      - eod-service
+      - reconciliation-service
+      - notification-service
 
 volumes:
   minibank-pgdata:

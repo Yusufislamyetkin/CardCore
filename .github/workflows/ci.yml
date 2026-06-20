@@ -1,0 +1,164 @@
+﻿name: MiniBank CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  DOTNET_VERSION: '9.0.x'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build (Release)
+        run: dotnet build --no-restore --configuration Release
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run unit tests
+        run: |
+          dotnet test tests/Unit/MiniBank.IamService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=iam-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.AccountService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=account-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.CardService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=card-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.AuthorizationService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=authorization-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.TransactionService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=transaction-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.InstallmentService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=installment-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.FraudService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=fraud-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.EodService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=eod-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.ReconciliationService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=reconciliation-unit.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Unit/MiniBank.NotificationService.UnitTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=notification-unit.trx" \
+            --results-directory ./test-results
+
+      - name: Upload unit test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-test-results
+          path: test-results/
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run integration tests
+        run: |
+          dotnet test tests/Integration/MiniBank.IamService.IntegrationTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=iam-integration.trx" \
+            --results-directory ./test-results
+
+          dotnet test tests/Integration/MiniBank.AccountService.IntegrationTests \
+            --configuration Release --no-restore \
+            --logger "trx;LogFileName=account-integration.trx" \
+            --results-directory ./test-results
+
+      - name: Upload integration test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integration-test-results
+          path: test-results/
+
+  docker-build:
+    name: Docker Build Validation
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    strategy:
+      matrix:
+        service:
+          - { name: IamService, context: src/Services/MiniBank.IamService }
+          - { name: AccountService, context: src/Services/MiniBank.AccountService }
+          - { name: CardService, context: src/Services/MiniBank.CardService }
+          - { name: AuthorizationService, context: src/Services/MiniBank.AuthorizationService }
+          - { name: TransactionService, context: src/Services/MiniBank.TransactionService }
+          - { name: InstallmentService, context: src/Services/MiniBank.InstallmentService }
+          - { name: FraudService, context: src/Services/MiniBank.FraudService }
+          - { name: EodService, context: src/Services/MiniBank.EodService }
+          - { name: ReconciliationService, context: src/Services/MiniBank.ReconciliationService }
+          - { name: NotificationService, context: src/Services/MiniBank.NotificationService }
+          - { name: ApiGateway, context: src/Gateway/MiniBank.ApiGateway }
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image - ${{ matrix.service.name }}
+        run: |
+          docker build \
+            -f ${{ matrix.service.context }}/Dockerfile \
+            -t minibank-${{ matrix.service.name | lower }}:ci \
+            .
