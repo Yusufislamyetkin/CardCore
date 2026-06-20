@@ -75,3 +75,5 @@ app.MapControllers();
 app.MapGet("/health", () => Results.Ok(new { status = "healthy", service = "MiniBank.AccountService", timestamp = DateTime.UtcNow }));
 
 app.Run();
+
+public partial class Program { }
