@@ -58,6 +58,8 @@ public sealed class CardDbContext : BaseDbContext
         {
             entity.ToTable("card_limits");
             entity.HasKey(e => e.Id);
+            // Id is assigned in the domain; otherwise EF treats a new limit added to a loaded card as an UPDATE
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CardId)
                 .HasConversion(id => id.Value, raw => CardId.From(raw))
                 .IsRequired();

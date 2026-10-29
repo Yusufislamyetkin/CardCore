@@ -91,7 +91,6 @@ namespace MiniBank.CardService.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("MiniBank.CardService.Domain.Entities.CardLimit", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CardId")
