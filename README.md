@@ -1,6 +1,6 @@
-# MiniBank
+# CardCore
 
-[![CI](https://github.com/Yusufislamyetkin/MiniBank/actions/workflows/ci.yml/badge.svg)](https://github.com/Yusufislamyetkin/MiniBank/actions/workflows/ci.yml)
+[![CI](https://github.com/Yusufislamyetkin/CardCore/actions/workflows/ci.yml/badge.svg)](https://github.com/Yusufislamyetkin/CardCore/actions/workflows/ci.yml)
 ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)
@@ -9,6 +9,8 @@
 A card-payments backend built as a set of .NET 9 microservices: customer identity, accounts with a ledger, card issuing, real-time authorization, transactions, installments, fraud scoring, end-of-day processing, reconciliation and notifications — behind a single YARP API gateway.
 
 It is a reference project modeled on the card-payments domain I worked in at a Turkish bank. The goal is to show how I structure a payments backend: clear service boundaries, rich domain models with explicit state machines, safe handling of card data, atomic spending limits and tests at both unit and integration level.
+
+> The project started under the working name *MiniBank*, which is still used for the solution, project names and namespaces.
 
 ---
 
@@ -69,8 +71,8 @@ All service endpoints except login/registration require a JWT issued by IAM.
 **Requirements:** Docker Desktop.
 
 ```bash
-git clone https://github.com/Yusufislamyetkin/MiniBank.git
-cd MiniBank/infra
+git clone https://github.com/Yusufislamyetkin/CardCore.git
+cd CardCore/infra
 cp .env.example .env
 docker compose up --build
 ```
