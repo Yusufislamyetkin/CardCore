@@ -7,3 +7,4 @@ CREATE DATABASE installment_db;
 CREATE DATABASE fraud_db;
 CREATE DATABASE eod_db;
 CREATE DATABASE reconcile_db;
+CREATE DATABASE notification_db;

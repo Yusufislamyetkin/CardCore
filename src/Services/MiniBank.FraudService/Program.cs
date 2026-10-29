@@ -9,7 +9,7 @@ using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5007");
+builder.WebHost.UseUrls("http://+:5007");
 
 builder.Services.AddDbContext<FraudDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("FraudDb")));

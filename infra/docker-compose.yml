@@ -32,7 +32,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_NUM_PARTITIONS: 6
-      CLUSTER_ID: MiniBank-Kafka-Cluster-001
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
     ports:
       - "9092:9092"
     healthcheck:
@@ -76,7 +76,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -98,7 +99,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -115,7 +117,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -133,7 +136,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -152,7 +156,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -169,7 +174,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -186,7 +192,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -203,7 +210,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -220,7 +228,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -237,7 +246,8 @@ services:
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
     depends_on:
       postgres:
         condition: service_healthy
@@ -250,7 +260,8 @@ services:
     ports:
       - "5000:5000"
     environment:
-      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__Endpoint: http://jaeger:4317
       ReverseProxy__Clusters__iam-cluster__Destinations__iam-destination__Address: http://iam-service:5001/
       ReverseProxy__Clusters__account-cluster__Destinations__account-destination__Address: http://account-service:5002/
       ReverseProxy__Clusters__card-cluster__Destinations__card-destination__Address: http://card-service:5003/

@@ -10,7 +10,7 @@ using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5004");
+builder.WebHost.UseUrls("http://+:5004");
 
 builder.Services.AddDbContext<AuthorizationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("AuthorizationDb")));

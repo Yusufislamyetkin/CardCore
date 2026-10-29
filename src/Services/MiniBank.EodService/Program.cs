@@ -8,7 +8,7 @@ using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5008");
+builder.WebHost.UseUrls("http://+:5008");
 
 builder.Services.AddDbContext<EodDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("EodDb")));

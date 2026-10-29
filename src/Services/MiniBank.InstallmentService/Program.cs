@@ -8,7 +8,7 @@ using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5006");
+builder.WebHost.UseUrls("http://+:5006");
 
 builder.Services.AddDbContext<InstallmentDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("InstallmentDb")));

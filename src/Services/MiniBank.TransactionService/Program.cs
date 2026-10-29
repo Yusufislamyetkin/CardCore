@@ -8,7 +8,7 @@ using MiniBank.TransactionService.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5005");
+builder.WebHost.UseUrls("http://+:5005");
 
 builder.Services.AddDbContext<TransactionDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("TransactionDb")));

@@ -8,7 +8,7 @@ using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5003");
+builder.WebHost.UseUrls("http://+:5003");
 
 builder.Services.AddDbContext<CardDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("CardDb")));

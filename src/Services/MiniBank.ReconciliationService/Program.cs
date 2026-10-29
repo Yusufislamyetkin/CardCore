@@ -8,7 +8,7 @@ using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5009");
+builder.WebHost.UseUrls("http://+:5009");
 
 builder.Services.AddDbContext<ReconciliationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ReconciliationDb")));

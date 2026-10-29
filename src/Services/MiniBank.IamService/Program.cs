@@ -10,7 +10,7 @@ using MiniBank.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:5001");
+builder.WebHost.UseUrls("http://+:5001");
 
 // Database
 builder.Services.AddDbContext<IamDbContext>(options =>
