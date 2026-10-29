@@ -1,6 +1,6 @@
 namespace MiniBank.IamService.Api.Dtos;
 
-public sealed record RegisterRequest(string Email, string Password, string? Role = null);
+public sealed record RegisterRequest(string Email, string Password);
 
 public sealed record LoginRequest(string Email, string Password);
 

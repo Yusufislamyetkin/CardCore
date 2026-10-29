@@ -35,17 +35,14 @@ public sealed class AuthController : ControllerBase
         if (await _db.Users.AnyAsync(u => u.Email == email, ct))
             return Conflict(new { error = "Email already registered" });
 
-        var role = Role.Customer;
-        if (!string.IsNullOrWhiteSpace(request.Role) && Enum.TryParse<Role>(request.Role, true, out var parsedRole))
-            role = parsedRole;
-
+        // Self-registration always creates a customer; elevated roles must not be self-assigned
         var passwordHash = _passwordHasher.Hash(request.Password);
-        var user = IamUser.Create(email, passwordHash, role);
+        var user = IamUser.Create(email, passwordHash, Role.Customer);
 
         _db.Users.Add(user);
         await _db.SaveChangesAsync(ct);
 
-        return CreatedAtAction(nameof(Register), new { id = user.Id.Value });
+        return StatusCode(StatusCodes.Status201Created, new { id = user.Id.Value, email = user.Email });
     }
 
     [HttpPost("login")]
