@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Numerics;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
@@ -74,8 +75,13 @@ public sealed class AccountIntegrationTests : IAsyncLifetime
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    private static string NewIban() =>
-        $"TR{Random.Shared.Next(10000000, 99999999):D8}{Random.Shared.Next(10000000, 99999999):D8}{Random.Shared.Next(1000, 9999):D4}";
+    // Random 26-char TR IBAN with valid MOD-97 check digits ("2927" = "TR" converted to digits)
+    private static string NewIban()
+    {
+        var bban = string.Concat(Enumerable.Range(0, 22).Select(_ => Random.Shared.Next(10)));
+        var checkDigits = 98 - (int)(BigInteger.Parse(bban + "292700") % 97);
+        return $"TR{checkDigits:D2}{bban}";
+    }
 
     [Fact]
     public async Task CreateAccount_ShouldReturn201_WithValidRequest()
