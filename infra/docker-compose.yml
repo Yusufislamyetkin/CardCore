@@ -132,7 +132,7 @@ services:
       - "5004:5004"
     environment:
       ConnectionStrings__AuthorizationDb: "Host=postgres;Port=5432;Database=authorization_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
-      ConnectionStrings__Redis: "redis:6379,password=${REDIS_PASSWORD}"
+      Redis__ConnectionString: "redis:6379,password=${REDIS_PASSWORD}"
       Jwt__Secret: ${JWT_SECRET}
       Jwt__Issuer: MiniBank.IAM
       Jwt__Audience: MiniBank
