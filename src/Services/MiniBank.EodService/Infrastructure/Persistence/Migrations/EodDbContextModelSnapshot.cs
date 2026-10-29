@@ -155,7 +155,7 @@ namespace MiniBank.EodService.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProcessedAt")
                         .HasDatabaseName("ix_outbox_unprocessed")
-                        .HasFilter("processed_at IS NULL");
+                        .HasFilter("\"ProcessedAt\" IS NULL");
 
                     b.ToTable("outbox_messages", (string)null);
                 });

@@ -86,7 +86,7 @@ namespace MiniBank.EodService.Infrastructure.Persistence.Migrations
                 name: "ix_outbox_unprocessed",
                 table: "outbox_messages",
                 column: "ProcessedAt",
-                filter: "processed_at IS NULL");
+                filter: "\"ProcessedAt\" IS NULL");
 
             migrationBuilder.CreateIndex(
                 name: "ix_statements_account_period",

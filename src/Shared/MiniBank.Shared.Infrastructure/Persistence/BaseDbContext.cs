@@ -21,7 +21,7 @@ public abstract class BaseDbContext : DbContext
             entity.Property(e => e.Content).IsRequired();
             entity.Property(e => e.OccurredAt).IsRequired();
             entity.HasIndex(e => e.ProcessedAt)
-                .HasFilter("processed_at IS NULL")
+                .HasFilter("\"ProcessedAt\" IS NULL")
                 .HasDatabaseName("ix_outbox_unprocessed");
         });
     }

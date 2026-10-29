@@ -1,6 +1,0 @@
-@MiniBank.ApiGateway_HostAddress = http://localhost:5031
-
-GET {{MiniBank.ApiGateway_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
