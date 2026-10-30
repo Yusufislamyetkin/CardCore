@@ -6,7 +6,9 @@
 ![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 
-![Authorization flow](docs/images/authorization-flow.gif)
+![CardCore console walkthrough](docs/images/cardcore-demo.gif)
+
+<sub>Recorded against the running stack: onboarding, real-time authorization, a 10-request race test against the daily limit, fraud scoring and the resulting Jaeger trace. [MP4 version](docs/images/cardcore-demo.mp4)</sub>
 
 A card-payments backend built as a set of .NET 9 microservices: customer identity, accounts with a ledger, card issuing, real-time authorization, transactions, installments, fraud scoring, end-of-day processing, reconciliation and notifications — behind a single YARP API gateway.
 
@@ -83,13 +85,18 @@ This starts PostgreSQL, Redis, Kafka, Jaeger, the 10 services and the gateway. E
 
 | What | URL |
 | --- | --- |
-| API Gateway | http://localhost:5000 |
+| Demo console | http://localhost:5000 |
+| API Gateway | http://localhost:5000/api/… |
 | Swagger UI (per service) | http://localhost:5001/swagger … http://localhost:5010/swagger |
 | Jaeger (distributed traces) | http://localhost:16686 |
 
 > The values in `.env.example` are development-only defaults. Use your own secrets for anything beyond a local demo.
 
 ### Try it
+
+The quickest way is the **demo console** served by the gateway at http://localhost:5000. It calls the real APIs through the gateway: sign in, open an account, issue and activate a card, authorize purchases against a 1,000 TRY daily limit, fire 10 purchases in parallel to see the atomic limit hold, and score a suspicious transaction.
+
+![Demo console](docs/images/console.png)
 
 Each service folder contains a `.http` file you can run from Visual Studio, Rider or VS Code (REST Client). A typical flow through the gateway:
 

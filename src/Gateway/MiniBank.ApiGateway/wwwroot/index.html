@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CardCore Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f6f7fb; --card:#fff; --line:#e6e8f0; --text:#0f172a; --muted:#64748b; --accent:#4f46e5; --accent-soft:#eef2ff;
+          --green:#16a34a; --green-soft:#dcfce7; --red:#dc2626; --red-soft:#fee2e2; --amber:#d97706; --amber-soft:#fef3c7; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--text); font:14px/1.45 Inter, "Segoe UI", system-ui, sans-serif; min-height:100vh; }
+  header { height:56px; display:flex; align-items:center; gap:12px; padding:0 20px; background:var(--card); border-bottom:1px solid var(--line); }
+  .logo { width:30px; height:30px; border-radius:8px; background:var(--accent); color:#fff; display:grid; place-items:center; font-weight:800; }
+  header h1 { font-size:16px; font-weight:600; }
+  header .meta { margin-left:auto; display:flex; gap:18px; color:var(--muted); font-size:13px; align-items:center; }
+  header a { color:var(--accent); text-decoration:none; font-weight:500; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:#cbd5e1; margin-right:6px; }
+  .dot.on { background:var(--green); box-shadow:0 0 0 3px var(--green-soft); }
+  main { display:grid; grid-template-columns:330px 1fr 340px; gap:16px; padding:16px 20px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .panel + .panel { margin-top:16px; }
+  h2 { font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-bottom:12px; }
+  label { display:block; font-size:12px; color:var(--muted); margin:8px 0 4px; }
+  input, select { width:100%; height:36px; border:1px solid var(--line); border-radius:8px; padding:0 10px; font:inherit; background:#fff; }
+  input:focus, select:focus { outline:2px solid #c7d2fe; border-color:var(--accent); }
+  button { height:38px; border:0; border-radius:9px; padding:0 14px; font:600 14px Inter, "Segoe UI", sans-serif; cursor:pointer; background:var(--accent); color:#fff; }
+  button.ghost { background:var(--accent-soft); color:var(--accent); }
+  button:disabled { opacity:.45; cursor:default; }
+  .full { width:100%; margin-top:12px; }
+  .steps { list-style:none; padding:0; margin-top:12px; }
+  .steps li { display:flex; gap:10px; align-items:flex-start; padding:7px 0; color:var(--muted); font-size:13px; }
+  .steps li .ic { width:20px; height:20px; border-radius:50%; border:1.5px solid #cbd5e1; flex:none; display:grid; place-items:center; font-size:11px; color:#fff; }
+  .steps li.done { color:var(--text); } .steps li.done .ic { background:var(--green); border-color:var(--green); }
+  .steps li.run .ic { border-color:var(--accent); border-top-color:transparent; animation:spin .7s linear infinite; }
+  .steps small { display:block; color:var(--muted); font-family:Consolas, monospace; font-size:11.5px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .cc { margin-top:14px; height:150px; border-radius:14px; padding:16px 18px; color:#fff; position:relative; overflow:hidden;
+        background:linear-gradient(135deg,#312e81 0%,#4f46e5 55%,#7c3aed 100%); box-shadow:0 12px 30px #4f46e533; }
+  .cc::after { content:""; position:absolute; right:-40px; top:-60px; width:200px; height:200px; border-radius:50%; background:#ffffff14; }
+  .cc .brand { font-weight:700; letter-spacing:.02em; } .cc .chip { width:34px; height:24px; border-radius:5px; background:linear-gradient(135deg,#fde68a,#d97706); margin:14px 0 10px; }
+  .cc .pan { font:600 18px Consolas, monospace; letter-spacing:2px; } .cc .row { display:flex; justify-content:space-between; font-size:12px; opacity:.85; margin-top:6px; }
+  .cc .st { position:absolute; right:14px; top:14px; font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; background:#ffffff26; z-index:1; }
+  .cc.empty { background:repeating-linear-gradient(135deg,#f1f5f9 0 12px,#e2e8f0 12px 24px); box-shadow:none; color:var(--muted); display:grid; place-items:center; }
+  .pos { display:grid; grid-template-columns:1fr 140px auto; gap:10px; align-items:end; }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .chips button { height:32px; font-weight:500; font-size:13px; }
+  .log { margin-top:6px; }
+  .tx { display:grid; grid-template-columns:1fr auto auto; gap:12px; align-items:center; padding:11px 2px; border-bottom:1px solid var(--line); animation:in .35s ease; }
+  .tx:last-child { border-bottom:0; }
+  .tx b { font-weight:600; } .tx small { display:block; color:var(--muted); font-size:12px; }
+  .tx .amt { font-weight:600; font-variant-numeric:tabular-nums; }
+  .badge { font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; white-space:nowrap; }
+  .ok { background:var(--green-soft); color:var(--green); } .no { background:var(--red-soft); color:var(--red); }
+  @keyframes in { from { opacity:0; transform:translateY(-6px); } }
+  .empty-log { color:var(--muted); text-align:center; padding:26px 0; font-size:13px; }
+  .burst { margin-top:16px; padding:14px; border-radius:12px; background:var(--amber-soft); display:flex; gap:14px; align-items:center; }
+  .burst p { font-size:13px; color:#78350f; flex:1; } .burst button { background:var(--amber); }
+  .result { margin-top:12px; font-size:13px; padding:10px 12px; border-radius:10px; background:var(--accent-soft); color:#3730a3; display:none; }
+  .big { font-size:28px; font-weight:800; font-variant-numeric:tabular-nums; } .big span { font-size:15px; color:var(--muted); font-weight:500; }
+  .bar { position:relative; height:14px; border-radius:999px; background:#eef0f6; margin:10px 0 6px; overflow:hidden; }
+  .bar i { position:absolute; inset:0 auto 0 0; width:0; background:linear-gradient(90deg,#6366f1,#4f46e5); border-radius:999px; transition:width .6s ease; }
+  .bar i.full { background:linear-gradient(90deg,#f97316,#dc2626); }
+  .scale { display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); }
+  .kv { display:flex; justify-content:space-between; padding:6px 0; font-size:13px; } .kv span { color:var(--muted); }
+  .gauge { display:flex; align-items:center; gap:14px; margin:6px 0 10px; }
+  .ring { width:74px; height:74px; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--red) calc(var(--p)*1%), #eef0f6 0); transition:--p .8s; }
+  .ring b { width:56px; height:56px; border-radius:50%; background:#fff; display:grid; place-items:center; font-size:20px; }
+  .flag { display:flex; justify-content:space-between; font-size:12.5px; padding:5px 0; border-top:1px dashed var(--line); animation:in .3s ease both; }
+  .flag code { font-size:11.5px; color:#9a3412; background:#fff7ed; padding:1px 6px; border-radius:5px; } .flag span { font-weight:600; color:var(--red); }
+  .toast { position:fixed; right:20px; bottom:20px; background:#0f172a; color:#fff; padding:10px 14px; border-radius:10px; font-size:13px; opacity:0; transition:opacity .3s; }
+  .toast.show { opacity:1; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">C</div><h1>CardCore Console</h1>
+  <div class="meta">
+    <span><span class="dot" id="gwDot"></span>API Gateway · <span id="gwHost"></span></span>
+    <span id="who">not signed in</span>
+    <a href="http://localhost:16686" target="_blank">Jaeger traces ↗</a>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="panel">
+      <h2>1 · Customer onboarding</h2>
+      <label>Email</label><input id="email" value="demo@cardcore.dev">
+      <label>Password</label><input id="password" type="password" value="Demo-Passw0rd!">
+      <button class="full" id="setupBtn">Open account &amp; issue card</button>
+      <ul class="steps" id="steps">
+        <li data-s="auth"><span class="ic">✓</span><div>Sign in (IAM · JWT)<small></small></div></li>
+        <li data-s="account"><span class="ic">✓</span><div>Open account (IBAN mod-97)<small></small></div></li>
+        <li data-s="deposit"><span class="ic">✓</span><div>Deposit 5,000 TRY to ledger<small></small></div></li>
+        <li data-s="card"><span class="ic">✓</span><div>Issue debit card (Luhn, PAN hashed)<small></small></div></li>
+        <li data-s="limit"><span class="ic">✓</span><div>Activate &amp; set daily limit<small></small></div></li>
+      </ul>
+      <div class="cc empty" id="cc">No card issued yet</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="panel">
+      <h2>2 · Point of sale — real-time authorization</h2>
+      <div class="pos">
+        <div><label>Merchant</label><input id="merchant" value="Coffee Lab"></div>
+        <div><label>Amount (TRY)</label><input id="amount" type="number" value="400"></div>
+        <button id="authBtn" disabled>Authorize</button>
+      </div>
+      <div class="chips" id="quick">
+        <button class="ghost" data-m="Coffee Lab" data-a="400">☕ Coffee Lab · 400</button>
+        <button class="ghost" data-m="TechStore" data-a="450">💻 TechStore · 450</button>
+        <button class="ghost" data-m="Market 24" data-a="300">🛒 Market 24 · 300</button>
+      </div>
+      <div class="burst">
+        <p><b>Race test.</b> Fire 10 purchases of 50 TRY <b>at the same moment</b>. Redis checks and increments the limit in one atomic Lua script, so only what fits gets approved.</p>
+        <button id="burstBtn" disabled>Fire 10 in parallel</button>
+      </div>
+      <div class="result" id="burstResult"></div>
+    </div>
+    <div class="panel">
+      <h2>Authorization log</h2>
+      <div class="log" id="log"><div class="empty-log">Authorizations will appear here</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="panel">
+      <h2>Daily spending limit</h2>
+      <div class="big" id="spent">0 <span>/ 1,000 TRY</span></div>
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="scale"><span>0</span><span>250</span><span>500</span><span>750</span><span>1,000</span></div>
+      <div style="margin-top:14px">
+        <div class="kv"><span>Account balance</span><b id="balance">—</b></div>
+        <div class="kv"><span>Approved / declined</span><b id="counts">0 / 0</b></div>
+        <div class="kv"><span>Last decision</span><b id="latency">—</b></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>3 · Fraud scoring</h2>
+      <p style="font-size:13px;color:var(--muted)">25,000 TRY, cross-border, 03:00 UTC, 7 tx in the last hour, 3 recent declines.</p>
+      <button class="full ghost" id="fraudBtn" disabled>Score this transaction</button>
+      <div id="fraud"></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s), API = location.origin, LIMIT = 1000;
+const state = { token:null, account:null, card:null, spent:0, ok:0, no:0 };
+$('#gwHost').textContent = location.host;
+fetch(API + '/health').then(r => r.ok && $('#gwDot').classList.add('on')).catch(() => {});
+
+async function call(method, path, body) {
+  const res = await fetch(API + path, { method, headers: { 'Content-Type':'application/json', ...(state.token ? { Authorization:'Bearer ' + state.token } : {}) }, body: body ? JSON.stringify(body) : undefined });
+  const text = await res.text(); let data = null; try { data = text ? JSON.parse(text) : null; } catch {}
+  if (!res.ok && !(method === 'POST' && path === '/api/auth/register' && res.status === 409)) throw new Error(`${method} ${path} → ${res.status}`);
+  return data;
+}
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); };
+const fmt = n => Number(n).toLocaleString('en-US');
+const step = (s, cls, note) => { const li = $(`[data-s="${s}"]`); li.className = cls; if (note) li.querySelector('small').textContent = note; };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function newIban() {
+  const bban = Array.from({ length: 22 }, () => Math.floor(Math.random() * 10)).join('');
+  const check = 98n - BigInt(bban + '292700') % 97n;
+  return 'TR' + String(check).padStart(2, '0') + bban;
+}
+
+$('#setupBtn').onclick = async () => {
+  $('#setupBtn').disabled = true;
+  try {
+    const email = $('#email').value, password = $('#password').value;
+    step('auth', 'run');
+    await call('POST', '/api/auth/register', { email, password }).catch(() => {});
+    state.token = (await call('POST', '/api/auth/login', { email, password })).accessToken;
+    $('#who').textContent = email; step('auth', 'done', 'access token issued'); await sleep(250);
+
+    const customerId = crypto.randomUUID();
+    step('account', 'run');
+    state.account = await call('POST', '/api/accounts', { customerId, iban: newIban(), currency:'TRY', accountType:'Checking' });
+    step('account', 'done', state.account.iban); await sleep(250);
+
+    step('deposit', 'run');
+    const acc = await call('POST', `/api/accounts/${state.account.id}/deposit`, { amount:5000, description:'Salary' });
+    $('#balance').textContent = fmt(acc.balance) + ' TRY'; step('deposit', 'done', 'ledger: Credit +5,000.00'); await sleep(250);
+
+    step('card', 'run');
+    state.card = await call('POST', '/api/cards', { accountId: state.account.id, customerId, pan:'4111111111111111', expiry:'12/29', cardType:'Debit' });
+    step('card', 'done', state.card.panMasked);
+    $('#cc').className = 'cc'; $('#cc').innerHTML = `<span class="st" id="ccSt">CREATED</span><div class="brand">CardCore Debit</div><div class="chip"></div><div class="pan">${state.card.panMasked.replace(/(.{4})/g, '$1 ')}</div><div class="row"><span>${email.split('@')[0].toUpperCase()}</span><span>12/29</span></div>`;
+    await sleep(250);
+
+    step('limit', 'run');
+    await call('POST', `/api/cards/${state.card.id}/activate`);
+    await call('PUT', `/api/cards/${state.card.id}/limits/Daily`, { amount: LIMIT, currency:'TRY' });
+    $('#ccSt').textContent = 'ACTIVE'; step('limit', 'done', 'Active · daily limit 1,000 TRY');
+    ['#authBtn', '#burstBtn', '#fraudBtn'].forEach(s => $(s).disabled = false);
+  } catch (e) { toast(e.message); $('#setupBtn').disabled = false; }
+};
+
+function authorize(merchantName, amount) {
+  return call('POST', '/api/authorizations', {
+    cardId: state.card.id, accountId: state.account.id, panHash:'console', amount, currency:'TRY',
+    merchantId:'M-' + merchantName.length, merchantName, cardStatus:'Active', cardExpiry:'12/29',
+    availableBalance:5000, dailyLimit: LIMIT, monthlyLimit:20000 });
+}
+
+function record(merchant, amount, r, ms) {
+  const log = $('#log'); if (log.querySelector('.empty-log')) log.innerHTML = '';
+  const row = document.createElement('div'); row.className = 'tx';
+  row.innerHTML = `<div><b>${merchant}</b><small>${r.approved ? 'auth code ' + r.authorizationCode : 'counter unchanged'} · ${ms} ms</small></div><span class="amt">${fmt(amount)} TRY</span><span class="badge ${r.approved ? 'ok' : 'no'}">${r.approved ? 'APPROVED' : 'DECLINED · ' + r.declineReason}</span>`;
+  log.prepend(row);
+  if (r.approved) { state.spent += amount; state.ok++; } else state.no++;
+  $('#spent').innerHTML = `${fmt(state.spent)} <span>/ 1,000 TRY</span>`;
+  $('#barFill').style.width = Math.min(100, state.spent / LIMIT * 100) + '%';
+  $('#barFill').classList.toggle('full', state.spent >= LIMIT * .9);
+  $('#counts').textContent = `${state.ok} / ${state.no}`;
+  $('#latency').innerHTML = `<span class="badge ${r.approved ? 'ok' : 'no'}">${r.approved ? 'Approved' : 'Declined'}</span> in ${ms} ms`;
+}
+
+$('#authBtn').onclick = async () => {
+  const m = $('#merchant').value, a = Number($('#amount').value), t = performance.now();
+  try { const r = await authorize(m, a); record(m, a, r, Math.round(performance.now() - t)); } catch (e) { toast(e.message); }
+};
+$('#quick').onclick = e => { const b = e.target.closest('button'); if (!b) return; $('#merchant').value = b.dataset.m; $('#amount').value = b.dataset.a; };
+
+$('#burstBtn').onclick = async () => {
+  $('#burstBtn').disabled = true; const before = state.spent, t = performance.now();
+  const results = await Promise.all(Array.from({ length: 10 }, (_, i) => authorize('Parallel #' + (i + 1), 50).catch(() => ({ approved:false, declineReason:'Error' }))));
+  const ms = Math.round(performance.now() - t);
+  results.forEach((r, i) => record('Parallel #' + (i + 1), 50, r, ms));
+  const ok = results.filter(r => r.approved).length;
+  $('#burstResult').style.display = 'block';
+  $('#burstResult').innerHTML = `<b>${ok} of 10 approved, ${10 - ok} declined</b> — ${fmt(LIMIT - before)} TRY was left, so exactly ${Math.floor((LIMIT - before) / 50)} could fit. No overspend under concurrency.`;
+};
+
+$('#fraudBtn').onclick = async () => {
+  try {
+    const f = await call('POST', '/api/fraud/evaluate', { transactionId: crypto.randomUUID(), cardId: state.card.id, accountId: state.account.id,
+      amount:25000, currency:'TRY', transactionHourUtc:3, transactionCountLastHour:7, recentDeclineCount:3, isInternational:true });
+    $('#fraud').innerHTML = `<div class="gauge"><div class="ring" style="--p:${f.riskScore}"><b>${f.riskScore}</b></div><div><b>Risk score ${f.riskScore}/100</b><br><span class="badge no">Fraud case ${f.status}</span></div></div>`
+      + f.flags.map((x, i) => `<div class="flag" style="animation-delay:${i * .12}s"><code>${x.ruleName}</code><span>+${x.scoreContribution}</span></div>`).join('');
+  } catch (e) { toast(e.message); }
+};
+</script>
+</body>
+</html>

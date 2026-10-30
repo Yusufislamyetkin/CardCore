@@ -17,6 +17,10 @@ app.Use(async (ctx, next) =>
     await next();
 });
 
+// Demo console (wwwroot/index.html) calls the APIs through this gateway, so no CORS is needed
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapReverseProxy();
 app.MapGet("/health", () => Results.Ok(new
 {
